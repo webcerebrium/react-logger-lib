@@ -80,7 +80,7 @@ But when you click the second button, *the wrong one*, you will see console.warn
 
 What is the key feature of this approach, is that once written, it is compiled and running, and completely forgotten, you can manage logging level at anytime - and describe what level is required for what component tree in terms of your business logic. This management can be done just by putting `localStorage` variables in your browser.
 
-For this particular example you can use one of the following to enable level at
+For this particular example you can use one of the following to enable level at any *depth*:
 ```
 localStorage.setItem('App', 'INFO');
 localStorage.setItem('App.SidePicker', 'INFO');
@@ -108,7 +108,7 @@ There are 4 levels of logging currently. From lowest to highest these are `TRACE
 
 - This library is more a pattern to be cloned and configured for your own needs. This is why there are no plugins and extensions like in other similar facades.
 - We did it just because we love SLF4J approach in Java, but there was no similar thing in React applications.
-- Unlike Java, where component path is taken to logs automatically, here naming is left on responsibility of a writer. Our advice is to keep it as hierarchy of your business logic, as clear and standart as possible.
-- Please use wisely on render() methods, extensive logging during rendering is an easy way to downgrade your application performance.
+- Unlike Java, where component path is taken to logs automatically, here naming is left on responsibility of a writer. Our advice is to keep it as hierarchy of your business logic, as clear and standard as possible.
+- Please use logging wisely on `render()` methods, as extensive logging during rendering is an easy way to downgrade your application performance.
 - There is no slowdown noticed when logs are suppressed or not matching their level.
 - Feel free to discuss this project under Github `Issues`.
