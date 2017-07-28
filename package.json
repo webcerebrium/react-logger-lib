@@ -1,6 +1,6 @@
 {
   "name": "react-logger-lib",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ReactJS / ES6 / ES7 logging - lightweight library with managed logging levels, similar to simple logging facades in other languages",
   "main": "lib/library.js",
   "scripts": {
@@ -29,6 +29,8 @@
   "keywords": [
     "react",
     "reactjs",
+    "console",
+    "log",
     "logger",
     "logging",
     "es6",
@@ -36,8 +38,7 @@
     "javascript",
     "universal",
     "umd",
-    "commonjs",
-    "javascript"
+    "commonjs"
   ],
   "license": "ISC",
   "author": "Web Cerebrium <webcerebrium@gmail.com> (https://webcerebrium.com/)",
