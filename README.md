@@ -98,14 +98,6 @@ App.SidePicker.pickWrongSide | Attempt to pick a wrong side
 ## Levels of logging
 
 There are 4 levels of logging currently. From lowest to highest these are `TRACE`-`INFO`-`WARN`-`ERROR`:
-
-```
-localStorage.setItem('App.SidePicker', 'TRACE');
-localStorage.setItem('App.SidePicker', 'INFO');
-localStorage.setItem('App.SidePicker', 'WARN');
-localStorage.setItem('App.SidePicker', 'ERROR');
-```
-
 - `OFF` suppresses the logging completely:
 - `WARN` level will show all messages with `ERROR` level.
 - `INFO` level will show all messages with `ERROR` and `WARN` levels as well
@@ -114,7 +106,9 @@ localStorage.setItem('App.SidePicker', 'ERROR');
 
 ### Disclaimer
 
-- This library is more a pattern to be cloned and configured for your own needs. We did it because we love SLF4J approach in Java, but there was no similar thing in React applications.
-- Feel free to discuss this project under Github `Issues`.
+- This library is more a pattern to be cloned and configured for your own needs. 
+- We did it because we love SLF4J approach in Java, but there was no similar thing in React applications. 
+- Unlike Java, where component path is taken to logs automatically, here naming is left on responsibility of a writer. Our advice is to keep it as hierarchy of your business logic, as clear and standart as possible.
 - Please use wisely on render() methods, extensive logging during rendering is an easy way to downgrade your application performance.
-
+- There is no slowdown noticed when logs are suppressed or not matching their level.
+- Feel free to discuss this project under Github `Issues`.
