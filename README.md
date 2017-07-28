@@ -27,7 +27,7 @@ import { Logger } from 'react-logger-lib';
 class SidePicker extends Component {
 
    // Let's imagine some useful component for random side picking
-   // One of 4 options should be chosen. And same choise should not repeat
+   // One of 4 options should be chosen. And the same choice should not be repeated in the next attempt
 
    values = ['left', 'right', 'top', 'bottom' ];
    state = { side: 'left' };
@@ -71,12 +71,15 @@ class SidePicker extends Component {
 }
 
 export default SidePicker;
-
 ```
+
 Once you mount this component into your application, nothing is shown in `Console` tab when launched and when you click the first button, as it is declared under `INFO` level - and suppressed by default (this is why it is basically acceptable for production).
 
 But when you click the second button, *the wrong one*, you will see console.warn
-```App.SidePicker.pickWrongSide | Attempt to pick a wrong side``` stating that something wrong happened, though not critical for further application health.
+```
+App.SidePicker.pickWrongSide | Attempt to pick a wrong side
+``` 
+stating that something wrong happened, though there was nothing critical for further application health.
 
 What is the key feature of this approach, is that once written, it is compiled and running, and completely forgotten, you can manage logging level at anytime - and describe what level is required for what component tree in terms of your business logic. This management can be done just by putting `localStorage` variables in your browser.
 
@@ -99,10 +102,11 @@ App.SidePicker.pickWrongSide | Attempt to pick a wrong side
 
 There are 4 levels of logging currently. From lowest to highest these are `TRACE`-`INFO`-`WARN`-`ERROR`:
 
-- `OFF` suppresses the logging completely:
-- `WARN` level will show all messages with `ERROR` level.
-- `INFO` level will show all messages with `ERROR` and `WARN` levels as well
-- `TRACE` level will show all messages with `INFO`, `WARN` and `ERROR`  levels as well
+- `OFF` suppresses the logging completely
+- `ERROR` level will show only messages with `ERROR` level.
+- `WARN` level will show all messages with `ERROR` level as well.
+- `INFO` level will show all messages with `ERROR` and `WARN` levels as well.
+- `TRACE` level will show all messages with `INFO`, `WARN` and `ERROR` levels as well.
 
 `TRACE` is not calling `console.trace`, it is just a logical level in this library
 
