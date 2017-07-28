@@ -98,11 +98,13 @@ App.SidePicker.pickWrongSide | Attempt to pick a wrong side
 ## Levels of logging
 
 There are 4 levels of logging currently. From lowest to highest these are `TRACE`-`INFO`-`WARN`-`ERROR`:
+
 - `OFF` suppresses the logging completely:
 - `WARN` level will show all messages with `ERROR` level.
 - `INFO` level will show all messages with `ERROR` and `WARN` levels as well
 - `TRACE` level will show all messages with `INFO`, `WARN` and `ERROR`  levels as well
-- `TRACE` is not calling `console.trace`, it is just a logical level in this library
+
+`TRACE` is not calling `console.trace`, it is just a logical level in this library
 
 ### Disclaimer
 
