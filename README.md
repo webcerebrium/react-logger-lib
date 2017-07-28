@@ -19,8 +19,8 @@ This library is a tribute to simple logging facade from other languages and atte
 
 ## Typical Usage in React Component
 
-`SidePicker.jsx`
-```
+`SidePicker.jsx`:
+```javascript
 import React, { Component } from 'react';
 import { Logger } from 'react-logger-lib';
 
@@ -81,7 +81,7 @@ But when you click the second button, *the wrong one*, you will see console.warn
 What is the key feature of this approach, is that once written, it is compiled and running, and completely forgotten, you can manage logging level at anytime - and describe what level is required for what component tree in terms of your business logic. This management can be done just by putting `localStorage` variables in your browser.
 
 For this particular example you can use one of the following to enable level at any *depth*:
-```
+```javascript
 localStorage.setItem('App', 'INFO');
 localStorage.setItem('App.SidePicker', 'INFO');
 localStorage.setItem('App.SidePicker.pickSide', 'INFO');
