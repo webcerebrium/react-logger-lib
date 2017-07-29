@@ -110,6 +110,61 @@ There are 4 levels of logging currently. From lowest to highest these are `TRACE
 
 `TRACE` is not calling `console.trace`, it is just a logical level in this library
 
+## Using in Unit Tests
+
+Now let's see what we can benefit from our logging in unit tests:
+
+```javascript
+import React from 'react';
+import { shallow } from 'enzyme';
+import { enableLogger, Logger } from 'react-logger-lib';
+import SidePicker from './SidePicker';
+
+const expectNoErrors = () => { expect(Logger.calls.error).toEqual(0); };
+const expectNoWarn = () => { expect(Logger.calls.warn).toEqual(0); expectNoErrors(); };
+const expectWarn = () => { expect(Logger.calls.warn).toBeGreaterThan(0); };
+
+describe('App.SidePicker', () => {
+
+  it('was mounted without warnings', () => {
+    enableLogger(() => {
+      shallow(<SidePicker />);
+      expectNoWarn();
+    });
+  });
+
+  it('good button works without warnings', () => {
+    enableLogger(() => {
+      const elem = shallow(<SidePicker />);
+      // expect good button to be found
+      const goodButton = elem.find('button').at(0);
+      expect(goodButton.text()).toEqual('PICK ANOTHER SIDE');
+      // clicking on it
+      goodButton.simulate('click');
+      expectNoWarn();
+    });
+  });
+
+  it('bad button triggers warnings', () => {
+    enableLogger(false); // we do not want to see the warning when it happens
+
+    const elem = shallow(<SidePicker />);
+    // expect bad button to be found
+    const badButton = elem.find('button').at(1);
+    expect(badButton.text()).toEqual('PICK WRONG SIDE');
+    // clicking on it
+    badButton.simulate('click');
+    expectWarn();
+  });
+});
+```
+
+Jest tests above are checking that there was no warnings during components mounting, that there was no warning when the good button is clicked, and some warning was expected on the bad button.
+
+- **All logging is suppressed when running with Jest**. Therefore `enabledLogger()` function is a way to display actual warnings and errors when they are happening during tests. 
+- Typical case, as described above - we enable warnings when we do not expect them to happen. And we disable them when we actually expect a warning.
+- `enableLogger()` supports 2 ways of calling it. It's parameter could be a synchronous call with boolean flag or callback to be executed when warnings/errors logging is enabled.
+
 ### Disclaimer
 
 - This library is more a pattern to be cloned and configured for your own needs. This is why there are no plugins and extensions like in other similar facades.
