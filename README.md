@@ -78,7 +78,7 @@ Once you mount this component into your application, nothing is shown in `Consol
 But when you click the second button, *the wrong one*, you will see console.warn
 ```
 App.SidePicker.pickWrongSide | Attempt to pick a wrong side
-``` 
+```
 stating that something wrong happened, though there was nothing critical for further application health.
 
 What is the key feature of this approach, is that once written, it is compiled and running, and completely forgotten, you can manage logging level at anytime - and describe what level is required for what component tree in terms of your business logic. This management can be done just by putting `localStorage` variables in your browser.
@@ -161,14 +161,54 @@ describe('App.SidePicker', () => {
 
 Jest tests above are checking that there was no warnings during components mounting, that there was no warning when the good button is clicked, and some warning was expected on the bad button.
 
-- **All logging is suppressed when running with Jest**. Therefore `enabledLogger()` function is a way to display actual warnings and errors when they are happening during tests. 
+- **All logging is suppressed when running with Jest**. Therefore `enabledLogger()` function is a way to display actual warnings and errors when they are happening during tests.
 - Typical case, as described above - we enable warnings when we do not expect them to happen. And we disable them when we actually expect a warning.
 - `enableLogger()` supports 2 ways of calling it. It's parameter could be a synchronous call with boolean flag or callback to be executed when warnings/errors logging is enabled.
+
+## Eliminating Logger using WebPack Loader
+
+There is a natural desire to eliminate logging completely on certain production environments to get as small build size as possible.
+One of the ways it could be achieved - is by adding extra loader for your webpack configuration
+
+1. Create new file `no-logger-loader.js` with the following contents:
+
+```javascript
+module.exports = function(source, map) {
+  if (source.indexOf('react-logger-lib') !== -1) {
+    const cleanSource = source.replace(/Logger\.of\([^\)]+\)\.(trace|info|warn|error)/g, '');
+    this.callback(null, cleanSource, map);
+  } else {
+    this.callback(null, source, map);
+  }
+}
+```
+
+2. Modify your production configuration `webpack.config.prod.js`. It is **important to add this loader before** `babel-loader`.
+
+```javascript
+  ...
+  module: {
+    ...
+    rules: [
+      ...
+      {
+        test: /\.(js|jsx)$/,
+        include: paths.appSrc,
+        loader: require.resolve('./no-logger-loader')
+      },
+      ...
+    ]
+  }
+```
+
+3. Please make sure `UglifyJsPlugin` is also enabled in that webpack configuration.
+
+This way you will get rid of all logging on this environment.
 
 ### Disclaimer
 
 - This library is more a pattern to be cloned and configured for your own needs. This is why there are no plugins and extensions like in other similar facades.
-- We did it just because we love SLF4J approach in Java, but there was no similar thing in React applications.
+- We did it just because we love Slf4J approach in Java, but there was no similar thing in React applications.
 - Unlike Java, where component path is taken to logs automatically, here naming is left on responsibility of a writer. Our advice is to keep it as hierarchy of your business logic, as clear and standard as possible.
 - Please use logging wisely on `render()` methods, as extensive logging during rendering is an easy way to downgrade your application performance.
 - There is no slowdown noticed when logs are suppressed or not matching their level.
