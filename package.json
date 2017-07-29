@@ -1,6 +1,6 @@
 {
   "name": "react-logger-lib",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "ReactJS / ES6 / ES7 logging - lightweight library with managed logging levels, similar to simple logging facades in other languages",
   "main": "lib/library.js",
   "scripts": {
