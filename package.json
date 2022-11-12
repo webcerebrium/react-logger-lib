@@ -20,7 +20,7 @@
     "babel-preset-stage-1": "^6.24.1",
     "eslint": "^3.19.0",
     "eslint-loader": "^1.7.1",
-    "webpack": "^2.7.0"
+    "webpack": "^5.75.0"
   },
   "repository": {
     "type": "git",
